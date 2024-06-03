@@ -27,6 +27,10 @@ const routes = [
     label: "Categories",
   },
   {
+    href: "/invoices",
+    label: "Invoices",
+  },
+  {
     href: "/settings",
     label: "Settings",
   },
