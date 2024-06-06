@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-export const Dropzone: React.FC = () => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-  }, []);
+type DropzoneProps = {
+  onDrop: (files: File[]) => void;
+};
 
+export const Dropzone = ({ onDrop }: DropzoneProps) => {
   const {
     getRootProps,
     getInputProps,
@@ -18,17 +18,17 @@ export const Dropzone: React.FC = () => {
     onDrop,
     maxFiles: 10,
     accept: {
-      "image/*": [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".webp",
-        ".avif",
-        ".gif",
-        ".tif",
-        ".tiff",
-      ],
-      "document/*": [".pdf", ".doc", ".docx", ".xls", ".xlsx"],
+      // "image/*": [
+      //   ".jpg",
+      //   ".jpeg",
+      //   ".png",
+      //   ".webp",
+      //   ".avif",
+      //   ".gif",
+      //   ".tif",
+      //   ".tiff",
+      // ],
+      "document/*": [".pdf"], //, ".doc", ".docx", ".xls", ".xlsx"
     },
   });
 
