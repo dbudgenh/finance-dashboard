@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const InvoicesPage = () => {
   //set the state for the files
   const [files, setFiles] = useState<File[]>([]);
-  const [chosenFile, setChosenFile] = useState<File | null>(null);
+  const [chosenFile, setChosenFile] = useState<File | null |  undefined>(null);
   const [progresses, setProgresses] = useState<Record<string, number>>({});
 
   const onUpload = async (files: File[]) => {
@@ -32,7 +32,8 @@ const InvoicesPage = () => {
   return (
     <>
       <FileUploader
-        setChosenFile={setChosenFile}
+        chosenFile={chosenFile}
+        onChosenFileChange={setChosenFile}
         progresses={progresses}
         onUpload={onUpload}
         value={files}

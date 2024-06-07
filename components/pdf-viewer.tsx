@@ -18,7 +18,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 type PDFFile = string | File | null;
 
 type PdfViewerProps = {
-  file: PDFFile;
+  file: PDFFile | undefined;
 };
 
 type SearchCriteria = {
