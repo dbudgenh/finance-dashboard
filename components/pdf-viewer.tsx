@@ -40,10 +40,11 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
   };
 
   const onPageLoadSuccess = async (page: any): Promise<void> => {
-    const { items } = await page.getTextContent();
-    const text = items.map((item: any) => item.str).join(" ");
-    console.log(text);
+    const textContent = await page.getTextContent();
+    const textItems = textContent.items.map((item: any) => item.str);
+    const text = textItems.join(" ");
     setPageText(text);
+    console.log("Page text: ", text);
   };
 
   const onLoadStart = (): void => {
@@ -95,10 +96,10 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
     criteria: SearchCriteria[]
   ): string => {
     let highlightedText = text;
-
-    // Replace existing <mark> tags with placeholders
     const placeholder = "__HIGHLIGHT_PLACEHOLDER__";
     const highlights: string[] = [];
+
+    // Replace existing <mark> tags with placeholders
     highlightedText = highlightedText.replace(
       /<mark[^>]*>(.*?)<\/mark>/g,
       (match) => {
@@ -110,7 +111,6 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
     // Sort criteria by the length of the text in descending order
     criteria.sort((a, b) => b.match.length - a.match.length);
 
-    // Apply new highlights
     const appliedHighlights: { start: number; end: number }[] = [];
 
     criteria.forEach(({ match: pattern, color }) => {
@@ -187,6 +187,7 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
             <tr>
               <th className="py-2 px-4 border-b">Regex</th>
               <th className="py-2 px-4 border-b">Match</th>
+              <th className="py-2 px-4 border-b">Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -200,6 +201,19 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
                       style={{ backgroundColor: criterion.color }}
                     >
                       {criterion.match}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          setSearchCriteria((prev) =>
+                            prev.filter((c) => c !== criterion)
+                          )
+                        }
+                      >
+                        Remove
+                      </Button>
                     </td>
                   </tr>
                 ))}

@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteCategories } from "@/features/categories/api/use-bulk-delete-categories";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
 
-
 const CategoriesPage = () => {
   const newCategory = useNewCategory();
   const deleteCategory = useBulkDeleteCategories();
@@ -21,7 +20,7 @@ const CategoriesPage = () => {
 
   if (categoriesQuery.isLoading) {
     return (
-      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+      <div className="container pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
           <CardHeader>
             <Skeleton className="h-8 w-48" />
@@ -37,10 +36,10 @@ const CategoriesPage = () => {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+    <div className="container pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">
+        <CardHeader className="gap-y-2 sm:flex-row sm:items-center sm:justify-between">
+          <CardTitle className="text-xl line-clamp-1 text-center">
             Categories Page
           </CardTitle>
           <Button size="sm" onClick={newCategory.onOpen}>

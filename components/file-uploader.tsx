@@ -2,7 +2,10 @@
 
 import * as React from "react";
 import Image from "next/image";
-import Dropzone, { type DropzoneProps, type FileRejection } from "react-dropzone";
+import Dropzone, {
+  type DropzoneProps,
+  type FileRejection,
+} from "react-dropzone";
 import { toast } from "sonner";
 
 import { cn, formatBytes } from "@/lib/utils";
@@ -16,7 +19,9 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: File[];
   chosenFile?: File | null | undefined;
   onValueChange?: React.Dispatch<React.SetStateAction<File[]>>;
-  onChosenFileChange?: React.Dispatch<React.SetStateAction<File | null | undefined>>;
+  onChosenFileChange?: React.Dispatch<
+    React.SetStateAction<File | null | undefined>
+  >;
   onUpload?: (files: File[]) => Promise<void>;
   progresses?: Record<string, number>;
   accept?: DropzoneProps["accept"];
@@ -48,7 +53,9 @@ export function FileUploader(props: FileUploaderProps) {
     onChange: onValueChange,
   });
 
-  const [chosenFile, setChosenFile] = useControllableState<File | null | undefined>({
+  const [chosenFile, setChosenFile] = useControllableState<
+    File | null | undefined
+  >({
     prop: chosenFileProp,
     onChange: onChosenFileChange,
   });
@@ -81,8 +88,13 @@ export function FileUploader(props: FileUploaderProps) {
         });
       }
 
-      if (onUpload && updatedFiles.length > 0 && updatedFiles.length <= maxFiles) {
-        const target = updatedFiles.length > 0 ? `${updatedFiles.length} files` : `file`;
+      if (
+        onUpload &&
+        updatedFiles.length > 0 &&
+        updatedFiles.length <= maxFiles
+      ) {
+        const target =
+          updatedFiles.length > 0 ? `${updatedFiles.length} files` : `file`;
 
         toast.promise(onUpload(updatedFiles), {
           loading: `Uploading ${target}...`,
@@ -146,18 +158,26 @@ export function FileUploader(props: FileUploaderProps) {
             {isDragActive ? (
               <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
                 <div className="rounded-full border border-dashed p-3">
-                  <UploadIcon className="size-7 text-muted-foreground" aria-hidden="true" />
+                  <UploadIcon
+                    className="size-7 text-muted-foreground"
+                    aria-hidden="true"
+                  />
                 </div>
-                <p className="font-medium text-muted-foreground">Drop the files here</p>
+                <p className="font-medium text-muted-foreground">
+                  Drop the files here
+                </p>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
                 <div className="rounded-full border border-dashed p-3">
-                  <UploadIcon className="size-7 text-muted-foreground" aria-hidden="true" />
+                  <UploadIcon
+                    className="size-7 text-muted-foreground"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div className="space-y-px">
                   <p className="font-medium text-muted-foreground">
-                    Drag {'n'} drop files here, or click to select files
+                    Drag {"n"} drop files here, or click to select files
                   </p>
                   <p className="text-sm text-muted-foreground/70">
                     You can upload
@@ -173,7 +193,7 @@ export function FileUploader(props: FileUploaderProps) {
         )}
       </Dropzone>
       {files?.length ? (
-        <ScrollArea className="h-fit w-full px-3">
+        <ScrollArea className="h-fit w-full">
           <div className="max-h-48 space-y-4">
             {files?.map((file, index) => (
               <FileCard
@@ -200,16 +220,36 @@ interface FileCardProps {
   chosenFile?: File | null | undefined;
 }
 
-function FileCard({ file, progress, onRemove, setChosenFile, chosenFile }: FileCardProps) {
+function FileCard({
+  file,
+  progress,
+  onRemove,
+  setChosenFile,
+  chosenFile,
+}: FileCardProps) {
   const isPdfFile = file.type === "application/pdf";
   const isFileChosen = chosenFile && chosenFile.name === file.name;
 
   return (
-    
-    <div className={cn("relative flex items-center space-x-4")}>
+    <div
+      className={cn(
+        "relative flex items-center space-x-4",
+        "hover:cursor-pointer hover:bg-muted/50 rounded-lg px-4 py-2 transition duration-400"
+      )}
+      onClick={() => {
+        //toggle the chosen file
+        setChosenFile?.(isFileChosen ? null : file);
+      }}
+    >
       <div className="flex flex-1 space-x-4">
         {isPdfFile ? (
-          <FileText className={cn("aspect-square shrink-0 rounded-md object-cover",isFileChosen ? "text-blue-500" : "")} size={32} />
+          <FileText
+            className={cn(
+              "aspect-square shrink-0 rounded-md object-cover",
+              isFileChosen ? "text-blue-500" : ""
+            )}
+            size={32}
+          />
         ) : isFileWithPreview(file) ? (
           <Image
             src={file.preview}
@@ -222,24 +262,21 @@ function FileCard({ file, progress, onRemove, setChosenFile, chosenFile }: FileC
         ) : null}
         <div className="flex w-full flex-col gap-2">
           <div className="space-y-px">
-            <p className="line-clamp-1 text-sm font-medium text-foreground/80">{file.name}</p>
-            <p className="text-xs text-muted-foreground">{formatBytes(file.size)}</p>
+            <p className="line-clamp-1 text-sm font-medium text-foreground/80">
+              {file.name}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {formatBytes(file.size)}
+            </p>
           </div>
           {progress ? <Progress value={progress} /> : null}
         </div>
       </div>
       <div className="flex items-center gap-2">
-        {!isFileChosen && (
-          <Button type="button" onClick={() => setChosenFile?.(file)}>
-            Select
-          </Button>
-        )}
-        
-          <Button type="button" variant="outline" size="icon" onClick={onRemove}>
-            <X className="size-4 " aria-hidden="true" />
-            <span className="sr-only">Remove file</span>
-          </Button>
-        
+        <Button type="button" variant="outline" size="icon" onClick={onRemove}>
+          <X className="size-4 " aria-hidden="true" />
+          <span className="sr-only">Remove file</span>
+        </Button>
       </div>
     </div>
   );

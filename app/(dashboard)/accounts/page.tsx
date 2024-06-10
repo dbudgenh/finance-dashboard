@@ -11,7 +11,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete-accounts";
 import { Metadata } from "next";
 
-
 const AccountsPage = () => {
   const newAccount = useNewAccount();
   const deleteAccount = useBulkDeleteAccounts();
@@ -22,7 +21,7 @@ const AccountsPage = () => {
 
   if (accountsQuery.isLoading) {
     return (
-      <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+      <div className="container pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
           <CardHeader>
             <Skeleton className="h-8 w-48" />
@@ -38,10 +37,12 @@ const AccountsPage = () => {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
+    <div className="container pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
-        <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Accounts Page</CardTitle>
+        <CardHeader className="gap-y-2 sm:flex-row sm:items-center sm:justify-between">
+          <CardTitle className="text-xl line-clamp-1 text-center">
+            Accounts Page
+          </CardTitle>
           <Button size="sm" onClick={newAccount.onOpen}>
             <Plus className="size-4 mr-2" />
             Add new

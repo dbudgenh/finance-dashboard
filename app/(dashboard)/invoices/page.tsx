@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const InvoicesPage = () => {
   //set the state for the files
   const [files, setFiles] = useState<File[]>([]);
-  const [chosenFile, setChosenFile] = useState<File | null |  undefined>(null);
+  const [chosenFile, setChosenFile] = useState<File | null | undefined>(null);
   const [progresses, setProgresses] = useState<Record<string, number>>({});
 
   const onUpload = async (files: File[]) => {
@@ -30,7 +30,7 @@ const InvoicesPage = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col space-y-2">
       <FileUploader
         chosenFile={chosenFile}
         onChosenFileChange={setChosenFile}
@@ -42,8 +42,10 @@ const InvoicesPage = () => {
         multiple
         accept={{ "application/pdf": [] }}
       />
-      <PdfViewer file={chosenFile} />
-    </>
+      <div className="grid grid-cols-2">
+        <PdfViewer file={chosenFile} />
+      </div>
+    </div>
   );
 };
 
