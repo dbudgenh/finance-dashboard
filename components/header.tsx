@@ -9,12 +9,12 @@ export const Header = () => {
     <header className="bg-gradient-to-b from-blue-700 to-blue-500 py-8 pb-36">
       <div className="container">
         <div className="w-full flex items-center justify-between mb-14">
-          <div className="flex items-center lg:gap-x-16">
+          <div className="flex items-centerlg:gap-x-16">
             <HeaderLogo />
             <Navigation />
           </div>
           <ClerkLoaded>
-            <UserButton afterSignOutUrl="" />
+            <UserButton afterSignOutUrl="/" showName={false} />
           </ClerkLoaded>
           <ClerkLoading>
             <Loader2 className="size-8 text-slate-400 animate-spin" />

@@ -96,6 +96,7 @@ export const PdfViewer = ({ file }: PdfViewerProps) => {
     criteria: SearchCriteria[]
   ): string => {
     let highlightedText = text;
+    console.log("Highlighting text: ", highlightedText);
     const placeholder = "__HIGHLIGHT_PLACEHOLDER__";
     const highlights: string[] = [];
 
